@@ -1,10 +1,13 @@
 package com.example.demo.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,8 +23,10 @@ public class Clients {
 	String last_name;
 	@Column
 	String city;
-	@Column
-	int user_id;
+	
+	@OneToOne (cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id")
+	Users user_id;
 	@Column
 	String state;
 	@Column
@@ -29,16 +34,17 @@ public class Clients {
 	public Clients() {
 		super();
 	}
-	public Clients(int client_id, String first_name, String last_name, String city, int user_id, String state,
+	public Clients( String first_name, String last_name, String city, Users user_id, String state,
 			int pincode) {
 		super();
-		this.client_id = client_id;
+		
 		this.first_name = first_name;
 		this.last_name = last_name;
 		this.city = city;
 		this.user_id = user_id;
 		this.state = state;
 		this.pincode = pincode;
+		
 	}
 	public int getClient_id() {
 		return client_id;
@@ -52,7 +58,7 @@ public class Clients {
 	public String getCity() {
 		return city;
 	}
-	public int getUser_id() {
+	public Users getUser_id() {
 		return user_id;
 	}
 	public String getState() {
@@ -73,7 +79,7 @@ public class Clients {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	public void setUser_id(int user_id) {
+	public void setUser_id(Users user_id) {
 		this.user_id = user_id;
 	}
 	public void setState(String state) {

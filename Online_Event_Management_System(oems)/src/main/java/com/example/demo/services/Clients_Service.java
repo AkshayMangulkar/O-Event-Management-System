@@ -13,9 +13,14 @@ public class Clients_Service {
 	@Autowired
 	Clients_Repository cr;
 	//this is my logic
-	public List<Clients> getClients()
+	/*public List<Clients> getClients()
 	{
 		return cr.findAll();
+	}*/
+	
+	public Clients add(Clients c)
+	{
+		return cr.save(c);//adding records in Clients table
 	}
 
 }
