@@ -24,10 +24,10 @@ public class Clients1 {
 	@Autowired
 	Users_Service uc;
 	
-	@PostMapping("/clients")
+	@PostMapping(value ="/clients")
 	public Clients registerClient(@RequestBody Clients_Register cr )
 	{
-		Users user=new Users(cr.getMobile_number(),cr.getPassword(),"Clients");
+		Users user=new Users(cr.getMobile_number(),cr.getPassword(),cr.getUser_type());
 		Users inserted=uc.add(user);
 		Clients client=new Clients();
 		client.setFirst_name(cr.getFirst_name());

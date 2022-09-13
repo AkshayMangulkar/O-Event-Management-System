@@ -1,14 +1,17 @@
 package com.example.demo.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="contacts")
+@Table(name="service_provider")
 public class Service_Providers {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,15 +22,16 @@ public class Service_Providers {
 	String last_name;
 	@Column
 	String business_name;
-	@Column
-	int user_id;
+	@OneToOne (cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id")
+	Users user_id;
 	public Service_Providers() {
 		super();
 	}
-	public Service_Providers(int service_provider_id, String first_name, String last_name, String business_name,
-			int user_id) {
+	public Service_Providers(String first_name, String last_name, String business_name,
+			Users user_id) {
 		super();
-		this.service_provider_id = service_provider_id;
+		
 		this.first_name = first_name;
 		this.last_name = last_name;
 		this.business_name = business_name;
@@ -45,7 +49,7 @@ public class Service_Providers {
 	public String getBusiness_name() {
 		return business_name;
 	}
-	public int getUser_id() {
+	public Users getUser_id() {
 		return user_id;
 	}
 	public void setService_provider_id(int service_provider_id) {
@@ -60,7 +64,7 @@ public class Service_Providers {
 	public void setBusiness_name(String business_name) {
 		this.business_name = business_name;
 	}
-	public void setUser_id(int user_id) {
+	public void setUser_id(Users user_id) {
 		this.user_id = user_id;
 	}
 	@Override

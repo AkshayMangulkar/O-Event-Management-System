@@ -8,12 +8,13 @@ public class Clients_Register {
 	String last_name;
 	String city;
 	String state;
+	String user_type;
 	int pincode;
 	public Clients_Register() {
 		super();
 	}
 	public Clients_Register(String mobile_number, String password, String first_name, String last_name, String city,
-			String state, int pincode) {
+			String state, int pincode,String user_type) {
 		super();
 		this.mobile_number = mobile_number;
 		this.password = password;
@@ -22,6 +23,14 @@ public class Clients_Register {
 		this.city = city;
 		this.state = state;
 		this.pincode = pincode;
+		this.user_type=user_type;
+	}
+	
+public String getUser_type() {
+		return user_type;
+	}
+	public void setUser_type(String user_type) {
+		this.user_type = user_type;
 	}
 public String getMobile_number() {
 	return mobile_number;

@@ -20,5 +20,7 @@ public class Users_Service {
 	{
 		return us.save(u);//adding records in users table
 	}
+	
+
 
 }
