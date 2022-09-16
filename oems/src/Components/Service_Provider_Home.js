@@ -5,7 +5,7 @@ import Login from "./Login";
 
 import mystore from "./Store";
 
-export function Client_Home() {
+export function Service_Provider_Home() {
     const[flag,setFlag]=useState();
     const navigate=useNavigate();
     useEffect(()=>{
@@ -26,24 +26,18 @@ export function Client_Home() {
                 
                 <Link className='nav-item' to="/home">  Home  </Link>
                 <Link className='nav-item' to="/bookings"> Bookings  </Link>
-                <Link className='nav-item' to="/cart">  Cart  </Link>
+                <Link className='nav-item' to="/registerService">  Register Service  </Link>
                 
                 <div class="d-flex justify-content-end">
                     <button className="btn btn-primary" onClick={Logout}> Logout</button>
                 </div>
             
-            
-            {/* <form className="form-inline my-2 my-lg-0">
-            <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"></input>
-            <button className="btn  my-1 my-sm-0" type="submit">Search</button>
-            </form> */}
-
             </nav>
             <Routes>
             
             <Route path="/home" element={<Home/>}></Route>
             <Route path="/login" element={<Login/>}></Route>
-            
+            <Route path="/registerService" element={<Login/>}></Route>
 
             </Routes>
 

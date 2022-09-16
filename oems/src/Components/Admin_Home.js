@@ -49,7 +49,7 @@ export function Client_Home() {
 
             
             
-            <h1 >Welcome Mr/Mrs {JSON.parse(localStorage.getItem("loggedinuser")).first_name}</h1>
+            <h1 >Welcome Admin {JSON.parse(localStorage.getItem("loggedinuser")).first_name}</h1>
         </div>
     );
 }

@@ -4,6 +4,7 @@ import Login from "./Login";
 import { Client_Home } from "./Client_Home";
 import { useEffect, useState } from "react";
 import mystore from "./Store";
+import { Service_Provider_Home } from "./Service_Provider_Home";
 export function Home() {
 
     const[flag,setFlag]=useState();
@@ -11,16 +12,16 @@ export function Home() {
       mystore.subscribe(()=>setFlag(mystore.getState().loggedin))
   })
     return (
-    <BrowserRouter>
+    
     <div align="center">
     
     
-    <nav className="navbar navbar-light" style={{'backgroundColor': '#e3f2fd'}}>
+    <nav className="navbar " style={{display:flag?'none':'inline-list-item'}} >
         
-            <Link className='nav-item' to="/home">  Home  </Link>
-            <Link className='nav-item' to="/login">  Login  </Link>
-            <Link className='nav-item' to="/registerclient">  Register client  </Link>
-            <Link className='nav-item' to="/registersp">  Register Service Provider  </Link>
+            <Link className='btn btn-primary' to="/home">  Home  </Link>
+            <Link className='btn btn-primary' to="/login">  Login  </Link>
+            <Link className='btn btn-primary' to="/registerclient">  Register client  </Link>
+            <Link className='btn btn-primary' to="/registersp">  Register Service Provider  </Link>
 
         
         
@@ -34,10 +35,11 @@ export function Home() {
          
           <Route path="/login" element={<Login/>}></Route>
           <Route path="/registerclient" element={<RegistrationForm/>}></Route>
-          
+          <Route path="/client_home" element={<Client_Home/>}></Route>
+          <Route path="/serviceProvider_home" element={<Service_Provider_Home/>}></Route>
         </Routes>
     </div>
-    </BrowserRouter>
+    
     );
     
 }

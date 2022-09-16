@@ -38,17 +38,16 @@ function App() {
     //   </header>
     // </div>
     <>
-    <BrowserRouter>
-      <Routes>
-      <Route path="/client_home" element={<Client_Home/>}></Route>
-      </Routes>
-    </BrowserRouter>
+    
     
 <div>
       {/* <RegisterService/> */}
       {/* <Login/> */}
       <Header/>
-      <Home/>
+      <BrowserRouter>
+          <Home/>
+      </BrowserRouter>
+      
 </div>
 
 

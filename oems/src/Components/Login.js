@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 import mystore from "./Store.js";
@@ -17,6 +17,8 @@ const Login = (props)=>{
       mystore.subscribe(()=>setFlag(mystore.getState().loggedin))
       
   })
+  const navigate=useNavigate();
+  
     const[state,setState]=useState({
         mobile_number:"",
         password:"",
@@ -27,7 +29,7 @@ const Login = (props)=>{
         
     });
     
-    const[Loginobj,setLoginObj]=useState({});
+    
     const handleInput = (e)=>{
         setState((state)=>({
          ...state,
@@ -53,23 +55,37 @@ const Login = (props)=>{
             if(json.user_id.user_type =="Clients"){
                 setState({Client:json});
                 localStorage.setItem("loggedinuser",JSON.stringify(json));
+                mystore.dispatch({type:'LOGGEDIN'})
+                navigate('/client_home');
             }
             
             else if(json.user_id.user_type =="Service_Provider")
             {
-            setState({Service_Provider:json});
-            localStorage.setItem("loggedinuser",JSON.stringify(json))
-            setLoginObj(JSON.stringify(data))
-            mystore.dispatch({type:'LOGGEDIN'})
-            props.history.push('/client_home')
-            Navigate('/client_home')
+                setState({Service_Provider:json});
+                localStorage.setItem("loggedinuser",JSON.stringify(json))
+                
+                mystore.dispatch({type:'LOGGEDIN'})
+                
+                navigate('/serviceProvider_home');
             }
-            
+            else if(json.user_type =="Admin")
+            {
+                setState({Admin:json});
+                localStorage.setItem("loggedinuser",JSON.stringify(json))
+                
+                mystore.dispatch({type:'LOGGEDIN'})
+                
+                navigate('/serviceProvider_home');
+            }
+            else{
+                setState({loginerror: "Wrong ID/pwd"})
+            }
             
         }
         else
         {
             setState({loginerror: "Wrong ID/pwd"})
+            
         }
        
             
@@ -86,8 +102,12 @@ const Login = (props)=>{
          
 
             <input type="submit" value="LOGIN" onClick={submitData} />
+            
         </form>
-         {JSON.stringify(state)} <br/> 
+        <div >
+                {JSON.stringify(state.loginerror)}
+            </div>
+        
     </div>);
 }
 
