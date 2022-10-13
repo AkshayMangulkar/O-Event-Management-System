@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { BrowserRouter, Link, Route, Routes, useNavigate } from "react-router-dom";
 import { Home } from "./Home";
 import Login from "./Login";
-
+import RegisterService from "./Register_Service";
+import "../navbar.css";
 import mystore from "./Store";
+import { Display_Services_Service_Pro } from "./Serv_Pro_Services";
 
 export function Service_Provider_Home() {
     const[flag,setFlag]=useState();
@@ -16,34 +18,25 @@ export function Service_Provider_Home() {
     const Logout=()=>{
         mystore.dispatch({type:'LOGGEDOUT'});
         localStorage.removeItem('loggedinuser');
-        navigate('/login');
+        navigate('/');
     }
     return (
         <div >
         
             
-            <nav className="navbar navbar-light" style={{'backgroundColor': '#e3f2fd'}}>
+            <nav className="navbar navbar-light">
                 
-                <Link className='nav-item' to="/home">  Home  </Link>
-                <Link className='nav-item' to="/bookings"> Bookings  </Link>
-                <Link className='nav-item' to="/registerService">  Register Service  </Link>
-                
+                <Link className='link' to="/home">  Home  </Link>
+                <Link className='link' to="/spbookings"> Bookings  </Link>
+                <Link className='link' to="/serv_pro_Services"> My Services  </Link>
+                <Link className='link' to="/registerService">  Register Service  </Link>
+                <Link className="link" to="/servPro_Profile">User : {JSON.parse(localStorage.getItem("loggedinuser")).first_name}</Link>
                 <div class="d-flex justify-content-end">
-                    <button className="btn btn-primary" onClick={Logout}> Logout</button>
+                <button className="btn btn-danger" onClick={Logout}> Logout</button>
                 </div>
             
             </nav>
-            <Routes>
-            
-            <Route path="/home" element={<Home/>}></Route>
-            <Route path="/login" element={<Login/>}></Route>
-            <Route path="/registerService" element={<Login/>}></Route>
-
-            </Routes>
-
-            
-            
-            <h1 >Welcome Mr/Mrs {JSON.parse(localStorage.getItem("loggedinuser")).first_name}</h1>
+           <Display_Services_Service_Pro/>
         </div>
     );
 }

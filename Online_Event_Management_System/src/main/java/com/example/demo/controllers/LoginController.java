@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.entities.Security;
 import com.example.demo.entities.Users;
 import com.example.demo.services.Login_Service;
 @CrossOrigin(origins = "http://localhost:3000")
@@ -16,7 +17,7 @@ public class LoginController {
 	@PostMapping("/checkLogin")
 	public Object checkLogin(@RequestBody Users u)
 	{
-		return lservice.checkLogin(u.getMobile_number(),u.getPassword());
+		return lservice.checkLogin(u.getMobile_number(),Security.PasswordEncription(u.getPassword()));
 	}
 
 }

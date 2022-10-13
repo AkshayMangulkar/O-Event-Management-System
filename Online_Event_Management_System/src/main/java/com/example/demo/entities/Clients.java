@@ -27,17 +27,22 @@ public class Clients {
 	@OneToOne (cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	Users user_id;
+	
 	@Column
 	String state;
+	
 	@Column
 	int pincode;
+	
+	
 	public Clients() {
 		super();
 	}
-	public Clients( String first_name, String last_name, String city, Users user_id, String state,
+	
+	public Clients(int client_id, String first_name, String last_name, String city, Users user_id, String state,
 			int pincode) {
 		super();
-		
+		this.client_id = client_id;
 		this.first_name = first_name;
 		this.last_name = last_name;
 		this.city = city;
@@ -46,6 +51,7 @@ public class Clients {
 		this.pincode = pincode;
 		
 	}
+
 	public int getClient_id() {
 		return client_id;
 	}
@@ -88,11 +94,15 @@ public class Clients {
 	public void setPincode(int pincode) {
 		this.pincode = pincode;
 	}
+	
+	
 	@Override
 	public String toString() {
 		return "Clients [client_id=" + client_id + ", first_name=" + first_name + ", last_name=" + last_name + ", city="
-				+ city + ", user_id=" + user_id + ", state=" + state + ", pincode=" + pincode + "]";
+				+ city + ", user_id=" + user_id + ", state=" + state + ", pincode=" + pincode +  "]";
 	}
+	
+	
 	
 	
 

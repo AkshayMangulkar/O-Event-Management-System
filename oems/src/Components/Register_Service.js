@@ -1,42 +1,96 @@
-import { useEffect, useState } from "react";
+
+import {  useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import mystore from "./Store";
-import "/node_modules/bootstrap/dist/css/bootstrap.css";
+
 
 function RegisterService(){
-  
+    const navigate=useNavigate();
+    let[flag,setFlag]=useState(true);
     const[state,setState]=useState({
       service_name:"",
       cost:"",
       description:"",
       category_id:0,
-      service_provider_id:1
-        
+      service_provider_id:0
+      
     });
-    const[registeredobj,setRegisteredObj]=useState({});
+    const[picture,setPicture]=useState();
+    const[service_id,setService_id]=useState();
     const[message,setMessage]=useState("");
     const handleInput = (e)=>{
         setState((state)=>({
          ...state,
-         [e.target.name]:e.target.value
+         [e.target.name]:e.target.value,
+         service_provider_id:JSON.parse(localStorage.getItem("loggedinuser")).service_provider_id
         }));
     }
 
+    const Logout=()=>{
+      mystore.dispatch({type:'LOGGEDOUT'});
+      localStorage.removeItem('loggedinuser');
+      navigate('/');
+  }
 
     const submitData = (e)=>{
         e.preventDefault();
+        const requestOption1= {
+          method:"post",
+          headers:{
+              "content-type":"application/json"
+          },
+          body:JSON.stringify(state)
+      }
+       fetch("http://localhost:8080/saveService",requestOption1)
+      .then(res=>res.json())
+      .then(data=>{setService_id(data)
+      setFlag(false);
+      })
+    }
+
+    const uploadImg=(e)=>{
+      e.preventDefault();
+      var fd = new FormData();
+        fd.append("file",picture)
         const requestOption= {
             method:"post",
             headers:{
-                'content-type':'application/json'
+
             },
-            body:JSON.stringify(state)
+            body:fd
         }
-        fetch("http://localhost:8080/saveService",requestOption).then(res=>res.json()).then(data=>setRegisteredObj(data),setMessage("registered Successfuly !!!"))
+        fetch("http://localhost:8080/addimage/"+service_id,requestOption)
+        .then(res=>res.json())
+        .then(data =>{ console.log(JSON.stringify(data))
+
+            
+          if(data == 1)
+          {
+              alert("Product Image uploaded successfully.")
+          }
+          else
+          {
+              alert("failed to upload Product Image Try again...")
+
+          }
+  
+          })
     }
 
     return(<div >
+      <nav className="navbar navbar-light">
+                
+                <Link className='link' to="/serviceProvider_home">  Home  </Link>
+                <Link className='link' to="/spbookings"> Bookings  </Link>
+                <Link className='link' to="/registerService">  Register Service  </Link>
+                <Link className="link" to="/servPro_Profile">User : {JSON.parse(localStorage.getItem("loggedinuser")).first_name}</Link>
+                <div class="d-flex justify-content-end">
+                    <button className="btn btn-success" onClick={Logout}> Logout</button>
+                </div>
+            
+            </nav>
        
-      <div  >
+      <div >
         <h2 style={{"textAlign":"center"}} >Service Registration Form</h2>
         <form className="col-sm-3 align-center form">
         <div className="form-group">
@@ -55,7 +109,7 @@ function RegisterService(){
             <option value={2}>Catering</option>
             <option value={3}>Photography</option>
             <option value={4}>Decoration</option>
-            
+            <option value={5}>Music</option>
           </select>
         </div>
 
@@ -63,12 +117,18 @@ function RegisterService(){
           <label for="exampleFormControlTextarea1">Add Description</label>
           <textarea className="form-control" name="description" id="exampleFormControlTextarea1" rows="3" onChange={handleInput}></textarea>
         </div>
-        <button type="submit" class="btn btn-primary mb-2" onClick={submitData}>Add</button>
-  
+        <button type="submit" class="btn btn-primary mb-2" onClick={(e)=>submitData(e)}>Submit</button>
+
+        <div style={{display:flag?'none':'block'}}>
+            <label>Upload an image :</label>
+            <input type="file" name="file" class="form-control-file" onChange={(e)=>setPicture(e.target.files[0])}></input>
+            <button type="submit" class="btn btn-primary mb-2" onClick={(e)=>{uploadImg(e)}}>Upload Image</button>
+        </div>
+        
+        
         </form>
         <p style={{color:'white'}}>
-        {JSON.stringify(state)}
-        {JSON.stringify(registeredobj)} <br/>
+        
         {message}
         
         </p>

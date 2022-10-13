@@ -2,7 +2,6 @@ package com.example.demo.entities;
 
 public class Clients_Register {
 	String mobile_number;
-	
 	String password;
 	String first_name;
 	String last_name;

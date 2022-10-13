@@ -1,5 +1,7 @@
 package com.example.demo.entities;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -35,25 +39,35 @@ public class Services {
 	@JoinColumn(name = "category_id")
 	Category category_id;
 	
-	@JsonIgnoreProperties("users")
+	
 	@OneToOne ( cascade = CascadeType.ALL)
 	@JoinColumn(name = "service_provider_id")
 	Service_Providers service_provider_id;
 
+	@ManyToMany(cascade  = CascadeType.MERGE)
+	@JoinTable(name="booking_services",joinColumns= @JoinColumn(name="service_id") ,inverseJoinColumns=@JoinColumn(name="booking_id"))
+	Set<Bookings_View> bookings;
+
+	
 	public Services() {
 		super();
 	}
 
-	public Services(String service_name, double cost, String description, Category category_id,
+	
+
+	public Services( String service_name, double cost, String description, Category category_id,
 			Service_Providers service_provider_id) {
 		super();
-		
+
 		this.service_name = service_name;
 		this.cost = cost;
 		this.description = description;
 		this.category_id = category_id;
 		this.service_provider_id = service_provider_id;
+		
 	}
+
+
 
 	public int getService_id() {
 		return service_id;
@@ -102,13 +116,27 @@ public class Services {
 	public void setService_provider_id(Service_Providers service_provider_id) {
 		this.service_provider_id= service_provider_id;
 	}
+	
+	
+
+	
+
+
+
+	
+
+
 
 	@Override
 	public String toString() {
 		return "Services [service_id=" + service_id + ", service_name=" + service_name + ", cost=" + cost
 				+ ", description=" + description + ", category_id=" + category_id + ", service_provider_id="
-				+ service_provider_id+ "]";
+				+ service_provider_id + "]";
 	}
+
+
+
+	
 
 	
 	

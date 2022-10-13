@@ -35,11 +35,10 @@ public class Login_Service {
 			Clients c=null;
 			if(l.get(0).getUser_type().equals("Clients"))//getting type
 			{
-				System.out.println((l.get(0)));
+				
 				Optional<Clients> op=cr.getByUserId(l.get(0));//getting id
 				try {
 					c=op.get();
-					System.out.println(op.get());
 				}
 				catch (Exception e) {
 					e.printStackTrace();
@@ -52,14 +51,17 @@ public class Login_Service {
 			Optional<Service_Providers> op=sp.getByUserId(l.get(0));//getting id
 				try {
 					ps=op.get();
-					System.out.println(op.get());
 				}
 				catch (Exception e) {
 					e.printStackTrace();
 				}
 				return ps;
 			}
-			System.out.println(c);
+			else if(l.get(0).getUser_type().equals("Admin"))
+			{
+				return l.get(0);
+			}
+			
 			return c;
 			
 		}	

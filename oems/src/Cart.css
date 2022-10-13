@@ -1,0 +1,22 @@
+body{
+    
+    background-color: aquamarine;
+}
+
+.cart_body{
+    margin: 50px 400px;
+}
+/* .message{
+    background-color: bisque;
+    height: 50px;
+    width: 100px;
+} */
+.bottom{
+  
+    position: fixed;
+    
+}
+.book{
+    width: 200px;
+    margin: 5px 200px;
+}

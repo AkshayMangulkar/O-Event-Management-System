@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,7 +19,8 @@ public class Cart {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int cart_id;
 	
-	@OneToMany(mappedBy = "service_id", cascade = CascadeType.ALL)
+	
+	@OneToMany( cascade = CascadeType.ALL)
 	//@Column - not associated
 	Set<Services> serviceList;
 
@@ -26,9 +28,9 @@ public class Cart {
 		super();
 	}
 
-	public Cart(int cart_id, Set<Services> serviceList) {
+	public Cart(Set<Services> serviceList) {
 		super();
-		this.cart_id = cart_id;
+		
 		this.serviceList = serviceList;
 	}
 
@@ -41,16 +43,18 @@ public class Cart {
 	}
 
 	public Set<Services> getServiceList() {
+		System.out.println(serviceList);
 		return serviceList;
+		
 	}
 
 	public void setServiceList(Set<Services> serviceList) {
 		this.serviceList = serviceList;
 	}
 	
-//	public Services AddService(Services s) {
-//		
-//	}
+	public boolean AddService(Services s) {
+		return this.serviceList.add(s);
+	}
 
 	@Override
 	public String toString() {

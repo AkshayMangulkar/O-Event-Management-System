@@ -1,12 +1,12 @@
 /*import logo from './logo.svg';*/
 import './App.css';
-import Header from './header';
 
-import RegistrationForm from './Register';
+
+
 
 import { Home } from './Components/Home';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Client_Home } from './Components/Client_Home';
+
 
 
 
@@ -37,13 +37,13 @@ function App() {
        
     //   </header>
     // </div>
-    <>
+
     
     
-<div>
+<div className='App'>
       {/* <RegisterService/> */}
       {/* <Login/> */}
-      <Header/>
+
       <BrowserRouter>
           <Home/>
       </BrowserRouter>
@@ -51,7 +51,7 @@ function App() {
 </div>
 
 
-    </>
+ 
 
 
   );

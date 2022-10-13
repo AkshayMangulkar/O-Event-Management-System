@@ -27,8 +27,14 @@ public class Services_Service {
 	
 	public List<Services> getAll(){
 		List<Services> ls =ss.getAll();
-		System.out.println(ls.size());
+		
 		return ls;
+	}
+	
+	public List<Services> getAllByServPro(int serv_Pro_id){
+		List<Services> ls =ss.getAll();
+		List<Services> result=ls.stream().filter(s->s.getService_provider_id().getService_provider_id()==serv_Pro_id).toList();
+		return result;
 	}
 	
 	public Services SaveService(Register_Service_POJO ser) {
@@ -45,6 +51,31 @@ public class Services_Service {
 			ss.save(s);
 		}
 		return s;
+	}
+	public Services getService(int id) {
+		
+		Optional<Services> os=ss.findById(id);
+		if(os.isEmpty())return null;
+		else {
+			return os.get();
+		}
+		
+	}
+	
+	public int UpdateService(int id,Register_Service_POJO serv) {
+		Optional<Services> service=ss.findById(id);
+		try {
+			Services s= service.get();
+			s.setService_name(serv.getService_name());
+			s.setCost(serv.getCost());
+			s.setDescription(serv.getDescription());
+			ss.save(s);
+			return 1;
+		}
+		catch(Exception e) {
+			System.out.println(e);
+			return 0;
+		}
 	}
 
 	

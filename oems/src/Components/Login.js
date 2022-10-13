@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import mystore from "./Store.js";
 
 
-
+import '../Login.css';
 
 
 
@@ -22,7 +22,7 @@ const Login = (props)=>{
     const[state,setState]=useState({
         mobile_number:"",
         password:"",
-        loginerror:"",
+        loginerror:false,
         Client:"",
         Service_Provider:"",
         Admin:""
@@ -75,38 +75,52 @@ const Login = (props)=>{
                 
                 mystore.dispatch({type:'LOGGEDIN'})
                 
-                navigate('/serviceProvider_home');
+                navigate('/admin_home');
             }
             else{
-                setState({loginerror: "Wrong ID/pwd"})
+                setState({loginerror:true})
             }
             
         }
         else
         {
-            setState({loginerror: "Wrong ID/pwd"})
-            
+            setState({loginerror: true})
         }
        
             
     })
     }
-    return(<div>
-        <form style={{display:flag?'none':'block'}}>
-        
-            <input type="number" name="mobile_number" placeholder="Enter Mobile Number" onChange={handleInput} /> <br/> <br/>
+    return(<div className="login-box">
+            <form style={{display:flag?'none':'block'}}>
+            <div className="user-box">
+                <input type="text" name="mobile_number" placeholder="Enter Mobile Number" onChange={handleInput} />
+                <label>Username</label>
+            </div>
+            
 
-    
-            <input type="password" name="password" placeholder="Enter Password" onChange={handleInput} /> <br/> <br/>
-
+            <div class="user-box">
+                <input type="password" name="password" placeholder="Enter Password" onChange={handleInput} />
+                <label>Password</label>
+            </div>
          
-
-            <input type="submit" value="LOGIN" onClick={submitData} />
+            <div style={{display:state.loginerror?'block':'none'}} >
+                <p className="text-warning">Incorrect LoginId or Password</p>
+            </div>
+            {/* <input type="submit" value="LOGIN" onClick={submitData} /> */}
+            <a href="" style={{color: "white"}} onClick={submitData}>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Submit
+            </a>
+            <p>
+                <a href="/registerclient" style={{color:'aqua'}}>Register Client ?</a> <br/>
+                <a href="/registersp" style={{color:'aqua'}}>Register Service Provider ?</a>
+            </p>
             
         </form>
-        <div >
-                {JSON.stringify(state.loginerror)}
-            </div>
+        
         
     </div>);
 }
